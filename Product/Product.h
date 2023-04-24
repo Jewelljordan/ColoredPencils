@@ -10,26 +10,31 @@ using namespace std;
 class Product {
 private:
 	string name;
-	int amount;
-	int productID;
-	int price;
+	string amount;
+	string productID;
+	string price;
 public:
-	Product(string name, int amount, int productID, int price);
+	Product();
+	Product(string name, string amount, string productID, string price);
 
-	bool search(int productID);
-	void viewProduct();
+	string search(string productID);
+	void viewInventory();
+	string displayProduct(Product a);
 
-	void addItem(string name, int price, int productID);
-	void removeItem(int productID, int amount);
+	void addItem(string name, string price, string productID);
+	void removeItem(string productID, string amount);
 
-	int getAmount(int productID);
-	void setAmount(int productID, int amoount);
+	// getters
+	string getID() { return productID; };
+	string getName() { return name; };
+	string getAmount() { return amount; };
+	string getPrice() { return price; };
 
-	int getPrice(int produdctID);
-	void setPrice(int productID, int price);
-
-	string getName(int productID);
-	void setName(int productID, string name);
+	// setters
+	void setID(string productID) { this->productID = productID; };
+	void setName(string name) { this->name = name; };
+	void setAmount(string amount) { this->amount = amount; };
+	void setPrice(string price) { this->price = price; };
 };
 
 #endif
