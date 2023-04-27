@@ -20,12 +20,12 @@ public:
 	CartItem();
 	CartItem(string cartID, string productID, string displayName, string totalItemAmount, string totalItemCost);
 
-	string search(string productID);
-	void viewCart();
-	string displayCartItem(CartItem item);
+	//string search(string productID);
+	//void viewCart();
+	//string displayCartItem(CartItem item);
 
-	void addItem(string productID, string displayName, string totalItemAmount, string totalItemCost);
-	void removeItem(string productID, string totalItemAmount);
+	//void addItem(string productID, string displayName, string totalItemAmount, string totalItemCost);
+	//void removeItem(string productID, string totalItemAmount);
 
 	// getters
 	string getCartID() { return cartID; };
