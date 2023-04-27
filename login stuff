@@ -1,0 +1,24 @@
+void createAccount(vector<Customer>& customers, string username, string password)
+{
+	//write to file and vector
+	ofstream outfile;
+
+	outfile.open("Account.txt", ios::app);
+	outfile << username << ";" << password <<  endl;
+
+	outfile.close();
+
+	customers.push_back(Customer()); //needs to insert information
+}
+
+bool login(vector<Customer>& customers, string username, string password)
+{
+	for (int i = 0; i < customers.size(); i++)
+	{
+		if (customers[i].getUserName == username && customers[i].getPassword == password)
+		{
+			return true;
+		}
+	}
+	return false;
+}
