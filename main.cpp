@@ -1,8 +1,10 @@
-#pragma once
 #include <iostream>
 #include <string>
 
 using namespace std;
+
+#include "Product\Product.h"
+#include "Product\CartItem.h"
 
 int main()
 {
