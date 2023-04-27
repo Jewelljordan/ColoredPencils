@@ -14,15 +14,29 @@ private:
 	string productID;
 	string price;
 public:
-	Product();
-	Product(string name, string amount, string productID, string price);
+	Product() {
+		name = "";
+		productID = "";
+		price = "";
+		amount = "";
+	};
 
-	string search(string productID);
-	void viewInventory();
-	string displayProduct(Product a);
+	Product(string name, string amount, string productID, string price) {
+		this->name = name;
+		this->productID = productID;
+		this->price = price;
+		this->amount = amount;
+	};
 
-	void addItem(string name, string price, string productID);
-	void removeItem(string productID, string amount);
+	//string search(string productID);
+	//void viewInventory();
+	string displayProduct() {
+		string out = "" + productID + ", " + name + ", $" + price + ", " + amount + " left.\n";
+		return out;
+	};
+
+	//void addItem(string productID, string name, string price, string amount);
+	//void removeItem(string productID, string amount);
 
 	// getters
 	string getID() { return productID; };
