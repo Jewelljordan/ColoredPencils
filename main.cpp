@@ -22,10 +22,18 @@ bool logon(vector<Customer>& customers, string username, string password);
 
 //History
 void displayHistory(vector<History>& history);
+void addToHistory(vector<History>& history, string HistoryID, string itemID, string Date);
+void addHistorytoCart(vector<History>& history, string HistoryID, int count);
+void readHistory(vector<History>& history, string HistoryID);
+void deleteHistory(vector<History>& history, string HistoryID);
 
 //Cart
 void displayCart(vector<CartItem>& cart);
+void addToCart(vector<CartItem>& cart, string productID); //create cart item
+void removeFromCart(vector<CartItem>& cart, string prodcutID);
 
+//Misc
+void checkOut();
 
 int main()
 {
@@ -33,6 +41,8 @@ int main()
 	vector<Customer> customers;
 	vector<History> history;
 	vector<CartItem> cart;
+
+	Customer current;
 
     cout << "Welcome to _fun name_!" << endl << "Choose your next step." << endl;
 	while (true) {
@@ -77,15 +87,107 @@ int main()
 
 				if (num2 == 1) { //view inventory
 					displayInventory(inventory);
+					while (true) {
+						cout << "1. Add item to cart" << endl;
+						cout << "2. Go Back" << endl;
+
+						int num3;
+						cin >> num3;
+
+						if (num3 == 1) {
+							cout << "Item's ID: ";
+							string id;
+							cin >> id;
+
+							cout << "How many: ";
+							string quanity;
+							cin >> quanity;
+
+							addToCart(cart, id); //what other parameters?....
+						}
+						if (num3 == 2) {
+							break;
+						}
+					}
 				}
 				else if (num2 == 2) { //view history
 					displayHistory(history);
+					while (true) {
+						cout << "1. Add item to cart" << endl;
+						cout << "2. Go Back" << endl;
+
+						int num3;
+						cin >> num3;
+
+						if (num3 == 1) {
+							cout << "Item's ID: ";
+							string id;
+							cin >> id;
+
+							cout << "How many: ";
+							string quanity;
+							cin >> quanity;
+
+							addToCart(cart, id); //what other parameters?....
+						}
+						if (num3 == 2) {
+							break;
+						}
+					}
 				}
 				else if (num2 == 3) { //view cart
 					displayCart(cart);
+					while (true) {
+						cout << "1. Remove Item" << endl;
+						cout << "2. Check out cart" << endl;
+						cout << "3. Go Back" << endl;
+
+						int tmp;
+						cin >> tmp;
+
+						if (tmp == 1) { //remove item from cart
+							cout << "Item's ID: ";
+							string id;
+							cin >> id;
+							removeFromCart(cart, id);
+						} 
+						else if (tmp == 2) { //check out
+							checkOut();
+						}
+						else if (tmp == 3) { //go back
+							break;
+						}
+					}
 				}
 				else if (num2 == 4) { //view account
-					displayAccount(customers);
+					displayAccount(customers); //need to fix to display only current customer
+					while (true) {
+						cout << "1. Edit name" << endl;
+						cout << "2. Edit username" << endl;
+						cout << "3. Edit password" << endl;
+						cout << "4. Edit card information" << endl;
+						cout << "5. Exit" << endl;
+
+						int num4;
+						cin >> num4;
+
+						if (num4 == 1) {//edit name
+
+						}
+						else if (num4 == 2) {//edit username
+
+						}
+						else if (num4 == 3) {//edit password
+
+						}
+						else if (num4 == 4) {//edit card information
+
+						}
+						else if (num4 == 5) {
+							break;
+						}
+					}
+
 				}
 				else if (num2 == 5) {
 					break;
@@ -174,4 +276,65 @@ void searchInventory(vector<Product>& inventory, string productID) { //vector???
 	cout << a.displayProduct() << endl; 
 
 	in.close();
+}
+
+//History
+void addToHistory(vector<History>& history, string HistoryID, string itemID, string Date) {
+	ofstream outfile;
+
+	outfile.open("History.txt", ios::app);
+	outfile << HistoryID << ";" << itemID << ";" << Date << endl;
+
+	outfile.close();
+
+	history.push_back(History(HistoryID, itemID, Date));
+}
+
+void addHistorytoCart(vector<History>& history, string HistoryID, int count)
+{
+	int counter = 0;
+
+	for (int i = 0; i < history.size(); i++)
+	{
+		if (history[i].getHistoryID() == HistoryID)
+		{
+			if (counter == count)
+			{
+				// add
+			}
+		}
+	}
+}
+
+void readHistory(vector<History>& history, string HistoryID)
+{
+	int count = 0;
+
+	for (int i = 0; i < history.size(); i++)
+	{
+		if (history[i].getHistoryID() == HistoryID)
+		{
+			cout << count << "." << endl;
+			cout << "  itemID: " << history[i].getItemID() << endl;
+			cout << "  Date: " << history[i].getDate() << endl;
+			cout << endl;
+		}
+	}
+}
+
+void deleteHistory(vector<History>& history, string HistoryID)
+{
+	for (int i = 0; i < history.size(); i++) {
+		if (history[i].getHistoryID() == HistoryID)
+			history.erase(history.begin() + i - 1);
+	}
+
+	ofstream out;
+	out.open("History.txt");
+
+	for (int i = 0; i < history.size(); i++) {
+		out << history[i].getHistoryID() << ";" << history[i].getItemID() << ";" + history[i].getDate() << endl;
+	}
+
+	out.close();
 }
