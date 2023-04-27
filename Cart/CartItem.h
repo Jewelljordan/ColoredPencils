@@ -14,7 +14,7 @@ private:
 	string productID;
 	string displayName;
 	string totalItemAmount;
-	string totalIemCost;
+	string totalItemCost;
 
 public:
 	CartItem();
