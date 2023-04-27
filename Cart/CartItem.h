@@ -41,3 +41,6 @@ public:
 	void setTotalItemAmount(string totalItemAmount) { this->totalItemAmount = totalItemAmount; };
 	void setTotalItemCost(string totalItemCost) { this->totalItemCost = totalItemCost; };
 };
+
+
+#endif // CartItem_H
