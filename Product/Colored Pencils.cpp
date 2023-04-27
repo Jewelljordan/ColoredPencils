@@ -46,7 +46,8 @@ void addToInventory(vector<Product>& inventory, string productID, string name, s
 void removeFromInventory(vector<Product>& inventory, string productID) {
 	for (int i = 0; i < inventory.size(); i++) {
 		if (inventory[i].getID() == productID)
-			inventory.erase(i); //bruh what, how does one remove from vector
+			inventory.erase(inventory.begin() + i -1); //bruh what, how does one remove from vector
+														// I think this will make it work correctly -J
 	}
 
 	ofstream out;
