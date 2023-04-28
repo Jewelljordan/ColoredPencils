@@ -17,6 +17,11 @@ class Customer
 		string cvc;
 		string expiration;
 		string address;
+		
+		// for historyid and cartid here you'll have to make them both strings not our classes,
+		// because for the history and cart classes we will need to make a new entery even time 
+		// a new item is added in. And the only why to link all the different entries to each about is 
+		// to search through the list with the string id from their respective accounts.
 		//History() history;
 		//Shopping Cart() cartId;
 		
@@ -61,9 +66,9 @@ class Customer
 		void setName(string name) { this->name = name; };
 		void setUserName(string userName) { this->userName = userName; };
 		void setPassword(string password) { this->password = password; };
-		void setCreditCardNum(int creditCardNum) { this->creditCardNum = creditCardNum; };
-		void setCVC(int cvc) { this->cvc = cvc; };
-		void setExpiration() { this->expiration = expiration; };
+		void setCreditCardNum(string creditCardNum) { this->creditCardNum = creditCardNum; };
+		void setCVC(string cvc) { this->cvc = cvc; };
+		void setExpiration(string experation) { this->expiration = expiration; };
 		void setAddress(string address) { this->address = address; };
 		
 		void setHistory(History history) { this->history = history; };
