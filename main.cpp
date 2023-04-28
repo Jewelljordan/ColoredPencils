@@ -238,7 +238,7 @@ int main()
 				i++;
 			}
 
-			createAccount(customers, username, password); //make function
+			createAccount(customers, username, password); //make function // should be done
 		}
 	}
 
@@ -316,9 +316,12 @@ void searchInventory(vector<Product>& inventory, string productID) { //vector???
 void createAccount(vector<Customer>& customers, string username, string password)
 {
 	// get rest on info
-	//Customer(string customerID, string name, string userName, string password, string creditCardNum, 
-	// string cvc, string expiration, string address, string historyID, string cartID)
-	string creditCardnum, cvc, expiration, address, historyID, cartID;
+	string name, creditCardnum, cvc, expiration, address, customerID, historyID, cartID;
+
+	// name
+	cout << endl << endl << "What is your name? ";
+	cin >> name;
+
 
 	// card info
 	cout << endl << endl << "Please enter your credit card information." ;
@@ -335,6 +338,7 @@ void createAccount(vector<Customer>& customers, string username, string password
 
 	// using rand to generate both IDs
 	srand(time(0));
+	customerID = rand();
 	historyID = rand();
 	cartID = rand();
 
@@ -342,6 +346,11 @@ void createAccount(vector<Customer>& customers, string username, string password
 	int i = 0;
 	while(i < customers.size())
 	{
+		if(customerID == customers[i].getCustomerID())
+		{
+			historyID = rand();
+			i = -1;
+		}
 		if(historyID == customers[i].getHistoryID())
 		{
 			historyID = rand();
@@ -359,11 +368,17 @@ void createAccount(vector<Customer>& customers, string username, string password
 	ofstream outfile;
 
 	outfile.open("Account.txt", ios::app);
-	outfile << username << ";" << password <<  endl;
+
+	outfile << customerID << ";" << name << ";" << username << ";" << password << ";" <<
+				creditCardnum << ";" << cvc << ";" << expiration << ";" << address << ";" << 
+				historyID << ";" << cartID << ";" <<   endl;
 
 	outfile.close();
 
-	customers.push_back(Customer()); //needs to insert information
+	customers.push_back(Customer(customerID, name, username, password, creditCardnum, cvc, 
+									expiration, address, historyID, cartID)); //needs to insert information
+
+	cout << endl << endl << "Your account has been created, please login with your new account." << endl << endl;
 }
 
 bool logon(vector<Customer>& customers, string username, string password)
