@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <ctime>
 #include "Product.h"
 #include "Customer.h"
 #include "CartItem.h"
@@ -21,15 +22,15 @@ void createAccount(vector<Customer>& customers, string name, string username, st
 bool login(vector<Customer>& customers, string username, string password, Customer& current);
 
 //History
-void displayHistory(vector<History>& history);
-void addToHistory(vector<History>& history, string HistoryID, string itemID, string Date);
-void addHistorytoCart(vector<History>& history, string HistoryID, int count);
-void readHistory(vector<History>& history, string HistoryID);
+void displayHistory(vector<History>& history, string HistoryID);
+void addToHistory(vector<History>& history, vector<Product> inventory, string HistoryID, string name, string Date);
+//void addHistorytoCart(vector<History>& history, string HistoryID, int count);
 void deleteHistory(vector<History>& history, string HistoryID);
+string getDate();
 
 //Cart
 void displayCart(vector<CartItem>& cart, string cartID);
-void addToCart(vector<CartItem>& cart, string cartID, string productID, string displayName, string price); //create cart item
+void addToCart(vector<CartItem>& cart, vector<Product> inventory, string cartID, string name); //create cart item
 void removeFromCart(vector<CartItem>& cart, string cartID, string productID);
 
 //Misc
@@ -107,19 +108,12 @@ int main()
 						cin >> num3;
 
 						if (num3 == 1) {
-							cout << "Item's ID: ";
-							string id;
-							cin >> id;
-
 							cout << "Item's name: ";
 							string name;
 							cin >> name;
 
-							cout << "Item's price: "; //we could search for it, but thats a lot of work...
-							string price;
-							cin >> price;
-
-							addToCart(cart, current.getCartID(), id, name, price);
+							addToCart(cart, inventory, current.getCartID(), name);
+							addToHistory(history, inventory, current.getHistoryID(), name, getDate());
 						}
 
 						else if (num3 == 2) {
@@ -159,7 +153,7 @@ int main()
 					}
 				}
 				else if (num2 == 2) { //view history
-					//displayHistory(history);
+					displayHistory(history, current.getHistoryID());
 					while (true) {
 						cout << "1. Add item to cart" << endl;
 						cout << "2. Go Back" << endl;
@@ -168,19 +162,13 @@ int main()
 						cin >> num3;
 
 						if (num3 == 1) {
-							cout << "Item's ID: ";
-							string id;
-							cin >> id;
-
 							cout << "Item's name: ";
 							string name;
 							cin >> name;
 
-							cout << "Item's price: "; //we could search for it, but thats a lot of work...
-							string price;
-							cin >> price;
 
-							addToCart(cart, current.getCartID(), id, name, price);
+							addToCart(cart, inventory, current.getCartID(), name);
+							addToHistory(history, inventory, current.getHistoryID(), name, getDate());
 						}
 						if (num3 == 2) {
 							break;
@@ -355,8 +343,19 @@ void searchInventory(vector<Product>& inventory, string name) {
 }
 
 //History
-void addToHistory(vector<History>& history, string HistoryID, string itemID, string Date) {
+void addToHistory(vector<History>& history, vector<Product> inventory, string HistoryID, string name, string Date) {
 	ofstream outfile;
+
+	string itemID;
+
+	cout << "MF" << endl;
+
+	for (int i = 0; i < inventory.size(); i++) {
+		if (inventory[i].getName() == name) {
+			itemID = inventory[i].getID();
+		}
+	}
+
 
 	outfile.open("History.txt", ios::app);
 	outfile << HistoryID << ";" << itemID << ";" << Date << endl;
@@ -366,6 +365,7 @@ void addToHistory(vector<History>& history, string HistoryID, string itemID, str
 	history.push_back(History(HistoryID, itemID, Date));
 }
 
+/*
 void addHistorytoCart(vector<History>& history, string HistoryID, int count)
 {
 	int counter = 0;
@@ -381,8 +381,9 @@ void addHistorytoCart(vector<History>& history, string HistoryID, int count)
 		}
 	}
 }
+*/
 
-void readHistory(vector<History>& history, string HistoryID)
+void displayHistory(vector<History>& history, string HistoryID)
 {
 	int count = 0;
 
@@ -415,6 +416,23 @@ void deleteHistory(vector<History>& history, string HistoryID)
 	out.close();
 
 
+}
+
+string getDate() {/*
+	time_t now = time(0);
+	struct tm newtime;
+	tm* ltm = localtime_s(&newtime, &now);
+	int year = 1900 + ltm->tm_year;
+	int month = 1 + ltm->tm_mon;
+	int day = ltm->tm_mday;
+	int hour = 5 + ltm->tm_hour;
+	int min = 30 + ltm->tm_min;
+	int sec = ltm->tm_sec;
+
+	return "" + to_string(month) + "\/" + to_string(day) + "\/" + to_string(year) + " " + to_string(hour) + ":" + to_string(min) + ":" + to_string(sec);
+	*/
+
+	return "Placeholder";
 }
 
 //customer
@@ -457,20 +475,26 @@ bool login(vector<Customer>& customers, string username, string password, Custom
 
 
 //cart
-void addToCart(vector<CartItem>& cart, string cartID, string productID, string displayName, string price)
+void addToCart(vector<CartItem>& cart, vector<Product> inventory, string cartID, string name)
 {
-	//Use productID to pull Name, ItemAmount, and ItemCost.
-	//Increment search for item amount. 
-	//CartItem(cartID, productID);
-
 	ofstream outfile;
+	string productID;
+	string price;
 
 	outfile.open("CartItem.txt", ios::app);
-	outfile << cartID << ";" << productID << ";" << displayName << ";" << price << endl;
+
+	for (int i = 0; i < inventory.size(); i++) {
+		if (inventory[i].getName() == name) {
+			productID = inventory[i].getID();
+			price = inventory[i].getPrice();
+		}
+	}
+
+	outfile << cartID << ";" << productID << ";" << name << ";" << price << endl;
 
 	outfile.close();
 
-	cart.push_back(CartItem(cartID, productID, displayName, price));
+	cart.push_back(CartItem(cartID, productID, name, price));
 }
 
 void removeFromCart(vector<CartItem>& cart, string cartID, string productID)
