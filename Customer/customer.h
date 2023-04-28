@@ -22,6 +22,8 @@ class Customer
 		// because for the history and cart classes we will need to make a new entery even time 
 		// a new item is added in. And the only why to link all the different entries to each about is 
 		// to search through the list with the string id from their respective accounts.
+		// So the theory is to so a rand, make sure that no other account already has it, and then
+		// set it to historyID and do the same with cartID.
 		//History() history;
 		//Shopping Cart() cartId;
 		

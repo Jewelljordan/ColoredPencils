@@ -59,6 +59,7 @@ void Customer::edit()
 			}
 			break;
 		case 5:
+			// will probrably need to use getline instead here because address are not 1 word
 			cout << "New Address: ";
 			cin >> x;
 			setAddress(x);
