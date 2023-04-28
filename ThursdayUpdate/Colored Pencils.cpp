@@ -63,7 +63,6 @@ int main()
 		cin >> num;
 
 		if (num == 1) { //Exit
-			cout << "Shutting Down..." << endl;
 			break;
 		}
 		else if (num == 2) { // MAIN MENU
@@ -100,7 +99,9 @@ int main()
 					while (true) {
 						displayInventory(inventory);
 						cout << "1. Add item to cart" << endl;
-						cout << "2. Go Back" << endl;
+						cout << "2. Search Inventory" << endl;
+						cout << "3. Add to Inventory" << endl;
+						cout << "4. Go Back" << endl;
 
 						int num3;
 						cin >> num3;
@@ -120,7 +121,39 @@ int main()
 
 							addToCart(cart, current.getCartID(), id, name, price);
 						}
-						if (num3 == 2) {
+
+						else if (num3 == 2) {
+							cout << "What is the name of the item you would like to search for?" << endl;
+							string name;
+							cin >> name;
+
+							searchInventory(inventory, name);
+						}
+
+						else if (num3 == 3) {
+							cout << "Please provide the below information for the item to add." << endl;
+							cout << "Item's ID: ";
+							string id;
+							cin >> id;
+
+							cout << "Item's Name: ";
+							string name;
+							cin >> name;
+
+							cout << "Item's Price: $";
+							string price;
+							cin >> price;
+
+							cout << "Item's Amount: ";
+							string amt;
+							cin >> amt;
+
+							addToInventory(inventory, id, name, price, amt);
+							cout << name << " is added." << endl;
+
+						}
+
+						else if (num3 == 4) { //go back
 							break;
 						}
 					}
@@ -250,8 +283,8 @@ void displayInventory(vector<Product>& inventory) {
     {
         cout << "ID: " << inventory[i].getID() << endl;
         cout << "Name: " << inventory[i].getName() << endl;
-        cout << "Amount: " << inventory[i].getAmount() << endl;
-        cout << "Price: " << inventory[i].getPrice() << endl;
+        cout << "Amount: " << inventory[i].getAmount() << " left" << endl;
+        cout << "Price: $" << inventory[i].getPrice() << endl;
         cout << endl;
     }
 }
@@ -284,9 +317,11 @@ void removeFromInventory(vector<Product>& inventory, string productID) {
 
 }
 
-void searchInventory(vector<Product>& inventory, string productID) { //vector????
+void searchInventory(vector<Product>& inventory, string name) { 
 	ifstream in;
 	string line;
+
+	bool pres = false;
 
 	in.open("Inventory.txt");
 
@@ -296,16 +331,25 @@ void searchInventory(vector<Product>& inventory, string productID) { //vector???
 	while (getline(in, line)) {
 		a.setID(line.substr(0, line.find(delimiter)));
 		line.erase(0, line.find(delimiter) + delimiter.length());
-		if (a.getID() == productID)
-			return; //break while?
+		a.setName(line.substr(0, line.find(delimiter)));
+		line.erase(0, line.find(delimiter) + delimiter.length());
+		if (a.getName() == name) {
+			pres = true;
+			break;
+		}
+
 	}
-	a.setName(line.substr(0, line.find(delimiter)));
-	line.erase(0, line.find(delimiter) + delimiter.length());
+	
 	a.setAmount(line.substr(0, line.find(delimiter)));
 	line.erase(0, line.find(delimiter) + delimiter.length());
 	a.setPrice(line.substr(0, line.find(delimiter)));
 
-	cout << a.displayProduct() << endl; 
+	if (pres) {
+		cout << a.displayProduct() << endl;
+	}
+	else {
+		cout << name << " is not available." << endl;
+	}
 
 	in.close();
 }
@@ -392,7 +436,7 @@ void createAccount(vector<Customer>& customers, string name, string username, st
 
 	customers.push_back(Customer(customerID, name, username, password, creditCardNum, cvc, expiration, address, historyID, cartID)); //needs to insert information
 
-	cout << "Account Created! Please Login wiht your new account." << endl;
+	cout << "Account Created!" << endl;
 	//customers[customers.size()-1].viewAccount();
 }
 
@@ -404,7 +448,6 @@ bool login(vector<Customer>& customers, string username, string password, Custom
 		if (customers[i].getUserName() == username && customers[i].getPassword() == password)
 		{
 			current = customers[i];
-
 			return true;
 		}
 	}
@@ -597,4 +640,3 @@ void readInCart(vector<CartItem>& cart) {
 
 	infile.close();
 }
-
