@@ -63,6 +63,7 @@ int main()
 		cin >> num;
 
 		if (num == 1) { //Exit
+			cout << "Shutting Down..." << endl;
 			break;
 		}
 		else if (num == 2) { // MAIN MENU
@@ -391,7 +392,7 @@ void createAccount(vector<Customer>& customers, string name, string username, st
 
 	customers.push_back(Customer(customerID, name, username, password, creditCardNum, cvc, expiration, address, historyID, cartID)); //needs to insert information
 
-	cout << "Account Created!" << endl;
+	cout << "Account Created! Please Login wiht your new account." << endl;
 	//customers[customers.size()-1].viewAccount();
 }
 
@@ -399,10 +400,11 @@ bool login(vector<Customer>& customers, string username, string password, Custom
 {
 	for (int i = 0; i < customers.size(); i++)
 	{
-		cout << customers[i].getUserName() << " " << customers[i].getPassword() << endl;
+		//cout << customers[i].getUserName() << " " << customers[i].getPassword() << endl;
 		if (customers[i].getUserName() == username && customers[i].getPassword() == password)
 		{
 			current = customers[i];
+
 			return true;
 		}
 	}
