@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
+#include <cstdlib>
 #include "Product.h"
 #include "Customer.h"
 #include "CartItem.h"
@@ -52,10 +54,13 @@ int main()
 		cout << "2. Login" << endl;
 		cout << "3. Create Account" << endl;
 		
+		// we could probs just reuse this same num throughout for option 
+		// so we don't have to make a new variable every time
 		int num;
 		cin >> num;
 
 		if (num == 1) { //Exit
+			// cout << "Shutting Down..." << endl;
 			break;
 		}
 		else if (num == 2) { // MAIN MENU
@@ -97,7 +102,6 @@ int main()
 						cin >> num3;
 
 						if (num3 == 1) {
-							// probs should do name instead
 							cout << "Item's ID: ";
 							string id;
 							cin >> id;
@@ -204,9 +208,35 @@ int main()
 			string username;
 			cin >> username;
 
+			// check to make sure its not a duplicate
+			int i = 0;
+			while(i < customers.size())
+			{
+				if(username == customers[i].getUserName())
+				{
+					cout << endl << "This username is taken please choose another one: ";
+					cin >> username;
+					i = -1;
+				}
+				i++;
+			}
+
 			cout << endl << "Enter password: ";
 			string password;
 			cin >> password;
+
+			// same here but for password
+			i = 0;
+			while(i < customers.size())
+			{
+				if(password == customers[i].getPassword())
+				{
+					cout << endl << "This password is taken please choose another one: ";
+					cin >> password;
+					i = -1;
+				}
+				i++;
+			}
 
 			createAccount(customers, username, password); //make function
 		}
@@ -279,6 +309,74 @@ void searchInventory(vector<Product>& inventory, string productID) { //vector???
 	cout << a.displayProduct() << endl; 
 
 	in.close();
+}
+
+//Customer functions
+//void displayAccount(vector<Customer>& customers, string username);
+void createAccount(vector<Customer>& customers, string username, string password)
+{
+	// get rest on info
+	//Customer(string customerID, string name, string userName, string password, string creditCardNum, 
+	// string cvc, string expiration, string address, string historyID, string cartID)
+	string creditCardnum, cvc, expiration, address, historyID, cartID;
+
+	// card info
+	cout << endl << endl << "Please enter your credit card information." ;
+	cout << endl << "Credit Car Number: ";
+	cin >> creditCardnum;
+	cout << endl << "cvc: ";
+	cin >> cvc;
+	cout << endl << "experation date (mm/yy): ";
+	cin >> expiration;
+
+	// address
+	cout << endl << endl << "Now please enter your full shipping address.";
+	getline(cin >> ws, address);
+
+	// using rand to generate both IDs
+	srand(time(0));
+	historyID = rand();
+	cartID = rand();
+
+	// makes sure they special :D
+	int i = 0;
+	while(i < customers.size())
+	{
+		if(historyID == customers[i].getHistoryID())
+		{
+			historyID = rand();
+			i = -1;
+		}
+		if(cartID == customers[i].getCartID())
+		{
+			cartID = rand();
+			i = -1;
+		}
+		i++;
+	}
+
+	//write to file and vector
+	ofstream outfile;
+
+	outfile.open("Account.txt", ios::app);
+	outfile << username << ";" << password <<  endl;
+
+	outfile.close();
+
+	customers.push_back(Customer()); //needs to insert information
+}
+
+bool logon(vector<Customer>& customers, string username, string password)
+{
+	for (int i = 0; i < customers.size(); i++)
+	{
+		if (customers[i].getUserName() == username && customers[i].getPassword() == password)
+		{
+			return true;
+		}
+	}
+	return false;
+
 }
 
 //History

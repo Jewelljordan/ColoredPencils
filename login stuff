@@ -11,6 +11,7 @@ void createAccount(vector<Customer>& customers, string username, string password
 	customers.push_back(Customer()); //needs to insert information
 }
 
+// added to main
 bool login(vector<Customer>& customers, string username, string password)
 {
 	for (int i = 0; i < customers.size(); i++)
