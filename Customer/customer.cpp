@@ -4,6 +4,8 @@
 #include <fstream>
 #include <cstdlib>
 #include <String>
+#include "History.h"
+#include "CartItem.h"
 
 using namespace std;
 
