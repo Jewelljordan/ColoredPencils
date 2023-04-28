@@ -1,0 +1,6 @@
+1021486;Jewell;jewelljordann;hello
+1026394;Kaitlyn;kaitcat;hello
+1026522;Rosa;rosalia;hello
+1030002;1008;SpaceGray;10
+1030002;1006;Indigo;10
+1030002;1001;Orange;10
