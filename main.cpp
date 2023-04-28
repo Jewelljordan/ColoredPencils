@@ -42,6 +42,8 @@ int main()
 	vector<History> history;
 	vector<CartItem> cart;
 
+	// we probs need to open all the files and update the vectors here
+
 	Customer current;
 
     cout << "Welcome to _fun name_!" << endl << "Choose your next step." << endl;
@@ -95,6 +97,7 @@ int main()
 						cin >> num3;
 
 						if (num3 == 1) {
+							// probs should do name instead
 							cout << "Item's ID: ";
 							string id;
 							cin >> id;
