@@ -12,7 +12,7 @@ using namespace std;
 
 void Customer::edit()
 {
-	char option, option2;
+	int option, option2;
 	string x, y;
 	cout << "What do you want to edit? (Enter the number)" << endl;
 	cout << "1. Name" << endl << "2. Username" << endl << "3. Password" << endl << "4. Payment Information" << endl << "5. Address" << endl;
