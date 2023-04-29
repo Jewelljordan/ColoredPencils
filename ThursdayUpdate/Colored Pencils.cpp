@@ -34,7 +34,8 @@ void addToCart(vector<CartItem>& cart, vector<Product> inventory, string cartID,
 void removeFromCart(vector<CartItem>& cart, string cartID, string productID);
 
 //Misc
-//void checkOut();
+void checkOut(vector<CartItem>& cart, string cartID);
+
 void readInProduct(vector<Product>& inventory);
 void readInAccount(vector<Customer>& customers);
 void readInHistory(vector<History>& history);
@@ -192,7 +193,24 @@ int main()
 							removeFromCart(cart, current.getCartID(), id);
 						} 
 						else if (tmp == 2) { //check out
-							//checkOut();
+							checkOut(cart, current.getCartID());
+							cout << "Please confirm your card information and shipping address." << endl;
+							cout << current.getCreditCardNum() << endl << current.getCVC() << endl << current.getExpiration() << endl;
+							cout << current.getAddress() << endl;
+							cout << "Type \"yes\" to confirm. If there is an error type \"no\".";
+
+							string ans;
+							cin >> ans;
+							if (ans == "yes") {
+								cout << "You have been checked out!" << endl;
+							}
+							else {
+								cout << "Please return to the main menu and edit your information in view account." << endl;
+							}
+						}
+						else if (tmp == 3) { //go back
+							break;
+						}
 						}
 						else if (tmp == 3) { //go back
 							break;
@@ -659,4 +677,12 @@ void readInCart(vector<CartItem>& cart) {
 	}
 
 	infile.close();
+}
+
+void checkOut(vector<CartItem>& cart, string cartID) {
+	for (int i = 0; i < cart.size(); i++) {
+		if (cart[i].getCartID() == cartID) {
+			removeFromCart(cart, cartID, cart[i].getProductID());
+		}
+	}
 }
