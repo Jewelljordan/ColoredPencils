@@ -348,8 +348,6 @@ void addToHistory(vector<History>& history, vector<Product> inventory, string Hi
 
 	string itemID;
 
-	cout << "MF" << endl;
-
 	for (int i = 0; i < inventory.size(); i++) {
 		if (inventory[i].getName() == name) {
 			itemID = inventory[i].getID();
@@ -385,15 +383,13 @@ void addHistorytoCart(vector<History>& history, string HistoryID, int count)
 
 void displayHistory(vector<History>& history, string HistoryID)
 {
-	int count = 0;
 
 	for (int i = 0; i < history.size(); i++)
 	{
 		if (history[i].getHistoryID() == HistoryID)
 		{
-			cout << count << "." << endl;
-			cout << "  itemID: " << history[i].getItemID() << endl;
-			cout << "  Date: " << history[i].getDate() << endl;
+			cout << "itemID: " << history[i].getItemID() << endl;
+			cout << "Date: " << history[i].getDate() << endl;
 			cout << endl;
 		}
 	}

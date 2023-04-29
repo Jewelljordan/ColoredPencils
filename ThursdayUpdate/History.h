@@ -22,9 +22,9 @@ public:
 
     History(string HistoryID, string ItemID, string Date)
     {
-        HistoryID = this->HistoryID;
-        ItemID = this->ItemID;
-        Date = this->Date;
+        this->HistoryID = HistoryID;
+        this->ItemID = ItemID;
+        this->Date = Date;
     };
 
     //getters
