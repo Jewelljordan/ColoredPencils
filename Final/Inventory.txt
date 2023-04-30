@@ -1,0 +1,11 @@
+1000;Red;10;3
+1001;Orange;10;3
+1002;Yellow;10;3
+1003;Green;10;3
+1004;Blue;10;3
+1005;Violet;10;3
+1972;BREAD;66;2
+1006;Indigo;10;3
+1007;Clementine;10;5
+1008;SpaceGray;10;52749;2
+Maggie;1;2688;100000
